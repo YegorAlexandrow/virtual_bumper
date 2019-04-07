@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <stdint.h>
 
 #define PI      3.14159265358979323846264338327950288419716939937510582097
 #define SIN30   0.5
@@ -76,7 +77,7 @@ double reactAngular(VlxPoint vlx, double offset, double delta);
 * @param dists - массив расстояний с VLX-ов (в мм)
 * @return Скорректированный вектор скорости (Vx, Vy, Vz)
 */
-Velocity bump(double Vx, double Vy, double Vz, double* dists);
+Velocity bump(double Vx, double Vy, double Vz, uint16_t* dists);
 
 /**
 * Устанавливает значение границ виртуального бампера для i-ой стены

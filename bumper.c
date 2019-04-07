@@ -160,7 +160,7 @@ double hypot(double x, double y) {
 * @param dists - ������ ���������� � VLX-�� (� ��)
 * @return ����������������� ������ �������� (Vx, Vy, Vz)
 */
-Velocity bump(double Vx, double Vy, double Vz, double* dists)
+Velocity bump(double Vx, double Vy, double Vz, uint16_t* dists)
 {
     Velocity v_old = newVelocity(Vx, Vy, Vz);
 
