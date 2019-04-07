@@ -1,6 +1,5 @@
-#ifndef BUMPER_C_INCLUDED
-#define BUMPER_C_INCLUDED
 #include "bumper.h"
+
 VlxPoint VLXes[N_OF_VLX];
 Vect bumper_body[N_OF_WALLS];
 
@@ -220,4 +219,3 @@ void setBumperValueAt(int i, double floor, double ceil) { floors[i] = floor; cei
 */
 void initVirtualBumper() { makeBodyPoints(); makeVlxPoints(); }
 
-#endif

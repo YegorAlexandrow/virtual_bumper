@@ -104,6 +104,6 @@ void setBumperFloorAt(int i, double value);
 
 /**/void initVirtualBumper();
 
-#include "bumper.c"
+
 
 #endif
