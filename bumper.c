@@ -140,7 +140,7 @@ double reactAngular(VlxPoint vlx, double offset, double delta)
 {
     double alpha1 = atan2(vlx.pt.y + vlx.unit.y*offset, vlx.pt.x + vlx.unit.x*offset);
     double alpha2 = atan2(vlx.pt.y + vlx.unit.y*(offset+delta), vlx.pt.x + vlx.unit.x*(offset+delta));
-    return (alpha2 - alpha1) / PI * 180;
+    return (alpha2 - alpha1)/* / PI * 180*/;
 }
 
 char sign(double x)
@@ -171,22 +171,38 @@ Velocity bump(double Vx, double Vy, double Vz, uint16_t* dists)
     double v_angle = atan2(Vy, Vx);
     double v_abs = hypot(Vx, Vy);
     double r;
+    double abs_v_new, abs_v_old;
 
     for(i=0; i<18; i++)
     {
         double FLOOR = floors[VLXes[i].wall_index];
         double CEIL  = ceils[VLXes[i].wall_index];
 
-        v_proj = v_abs * fabs(cos(v_angle - atan2(VLXes[i].unit.y, VLXes[i].unit.x)));
-        r = react(dists[i]/c, v_proj/VLXes[i].wt, FLOOR/c, CEIL/c);
+        if(dists[i] != 0)
+        {
+            v_proj = v_abs * fabs(cos(v_angle - atan2(VLXes[i].unit.y, VLXes[i].unit.x)));
+            r = react((double)dists[i]/c, v_proj/VLXes[i].wt, FLOOR/c, CEIL/c);
 
-        Vx += VLXes[i].unit.x * r * VLXes[i].wt;
-        Vy += VLXes[i].unit.y * r * VLXes[i].wt;
-        Vz += dists[i]<CEIL ? reactAngular(VLXes[i], CEIL, dists[i]-CEIL) : 0;
+            Vx += VLXes[i].unit.x * r * VLXes[i].wt;
+            Vy += VLXes[i].unit.y * r * VLXes[i].wt;
+            //Vz += dists[i]<CEIL ? reactAngular(VLXes[i], CEIL, dists[i]-CEIL) : 0;
+        }
     }
 
-    if(sign(Vx) != signs[0]) Vx = 0;
-    if(sign(Vy) != signs[1]) Vy = 0;
+    //if(sign(Vx) != signs[0]) Vx = 0;
+    //if(sign(Vy) != signs[1]) Vy = 0;
+
+    abs_v_new = sqrt(Vx*Vx + Vy*Vy);
+    abs_v_old = sqrt(v_old.vx * v_old.vx + v_old.vy * v_old.vy);
+
+    if((Vx*v_old.vx + Vy*v_old.vy)/(abs_v_new*abs_v_old) < COS_STOP) Vx = Vy = Vz = 0;
+
+    if(abs_v_new - abs_v_old >= 0.001)
+    {
+        double k = abs_v_new / abs_v_old;
+        Vx *= k;
+        Vy *= k;
+    }
 
     return newVelocity(Vx, Vy, Vz);
 }

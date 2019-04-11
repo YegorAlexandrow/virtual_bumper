@@ -22,8 +22,8 @@
 /** Константы, требующие фактической подстройки **/
 
 /* Расстояния бампера по умолчанию */
-#define BUMPER_DEFAULT_FLOOR    25.
-#define BUMPER_DEFAULT_CEIL     70.
+#define BUMPER_DEFAULT_FLOOR    30.
+#define BUMPER_DEFAULT_CEIL     80.
 
 /*Расстояния бампера для стороны с выкинутым харвестером */
 #define BUMPER_HARVESTER_FLOOR  80.
@@ -39,6 +39,8 @@
 
 #define VLX_TAB 8.96                /* Расстояние от центра vlx'a до центра платы */
 #define VLX_ANGLE 18. / 180 * PI    /* Угол наклона vlx'ов относительно нормали поверхнисти (>0 - vlx'ы смотрят наружу) */
+
+#define COS_STOP -0.5
 
 /*************************************************/
 
